@@ -2,6 +2,8 @@
 
 Track leads by phone number. Smartly follow up with them X days later. Interface via SMS so it's all right on your phone.
 
+![](https://raw.github.com/scottmotte/numbers/master/numbers.png)
+
 ## Usage
 
 There are a list of commands you can text to the phone number you setup with this. They are:
