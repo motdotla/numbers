@@ -202,31 +202,10 @@ var twiml = {
   }
 }
 
-var tidies = {
-  list: {
-    handler: function(request) {
-      Tidy.list(function(err, res) {
-        if (err) {
-          var message = err.length ? err[0].message : err.message;
-          request.reply({success: false, error: {message: message}});
-        } else {
-          request.reply({success: true, tidies: res});
-        }
-      });
-    }
-  }
-}
-
 server.route({
   method  : 'POST',
   path    : '/api/v0/twiml/messaging.xml',
   config  : twiml.messaging
-});
-
-server.route({
-  method  : 'GET',
-  path    : '/api/v0/tidies/index.json',
-  config  : tidies.list
 });
 
 server.start(function() {
