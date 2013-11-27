@@ -176,13 +176,16 @@ var twiml = {
         case "LIST":
           Tidy.list(function(err, res) {
             if (err) {
-              var message       = err.length ? err[0].message : err.message;
+              var message   = err.length ? err[0].message : err.message;
               twiml_message = "ERROR: " + message;
             } else {
               twiml_message = "";
               res.forEach(function(tidy) {
                 twiml_message += tidy.number+" , "+tidy.name+" | ";
               });
+              if (twiml_message.length <= 0) {
+                twiml_message += "No warm numbers today. Try tomorrow."
+              }
             }
 
             Helpers.sendTwimlResponse(request, twiml_message);
