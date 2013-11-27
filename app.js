@@ -114,11 +114,12 @@ Tidy.prototype.add = function(fn){
 };
 
 Tidy.remove = function(number, fn){
-  // Just remove from the rolling list. The hash is kept around.
-  db.ZREM("tidies", number, function(err, res) {
+  var sanitized_number = sanitize(number).trim().toUpperCase().replace(/\D+/g, "") || ""
+
+  db.ZREM("tidies", sanitized_number, function(err, res) {
     if (err) { return fn(err, null); }
 
-    db.DEL("tidies/"+number, function(err, res) {
+    db.DEL("tidies/"+sanitized_number, function(err, res) {
       if (err) { return fn(err, null); }
 
       fn(err, res);
