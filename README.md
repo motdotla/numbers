@@ -29,9 +29,16 @@ heroku addons:add redistogo
 git push heroku master
 ```
 
+Next, we need to setup Twilio. [Create an account](http://twilio.com) and then do the following.
+
+Visit [your list of phone numbers](https://www.twilio.com/user/account/phone-numbers/incoming), click on the number you want to use,
+and on the next screen set the Messaging field to `https://yoursubdomain.herokuapp.com/api/v0/twiml/messaging.xml`. Here's a screenshot example.
+
+![](https://raw.github.com/scottmotte/numbers/master/twilio-install-example.png)
+
 #### Optional
 
-Set the X amount of days for warm up. The default is 2.
+Set the X amount of days for warm up. Defaults to 2.
 
 ```
 heroku config:set DAYS_TILL_WARM=30
