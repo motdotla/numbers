@@ -118,7 +118,11 @@ Tidy.remove = function(number, fn){
   db.ZREM("tidies", number, function(err, res) {
     if (err) { return fn(err, null); }
 
-    fn(err, res);
+    db.DEL("tidies/"+number, function(err, res) {
+      if (err) { return fn(err, null); }
+
+      fn(err, res);
+    });
   });
 };
 
