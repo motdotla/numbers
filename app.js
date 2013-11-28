@@ -13,7 +13,7 @@ var REDIS_URL                 = process.env.REDIS_URL || process.env.REDISTOGO_U
 var DAYS_TILL_WARM            = process.env.DAYS_TILL_WARM || 2;
 var NUMBER_WARMED_LIFE_IN_MS  = process.env.NUMBER_WARMED_LIFE_IN_MS || (DAYS_TILL_WARM * 86400000); // ms per day 
 var CMD_MESSAGE               = "Available Commands: "+
-                                "CMD | ADD number | REMOVE number | LIST";
+                                "CMD | ADD number | REMOVE number | LIST | LISTALL";
 
 // Libraries
 var redis_url   = require("url").parse(REDIS_URL);
@@ -62,11 +62,9 @@ var Tidy = module.exports.Tidy = function(self){
   return this;
 };
 
-Tidy.list = function(fn){
-  var beginning_of_day_in_ms = +new Date().setHours(0,0,0,0);
-
+Tidy._query = function(upper_z_range, fn){
   // Get all tidies that are 'warmed' up and ready to be contacted. Any with a warmed_at of less than or equal to curent day
-  db.ZRANGEBYSCORE("tidies", '-inf', beginning_of_day_in_ms, function(err, res) {
+  db.ZRANGEBYSCORE("tidies", '-inf', upper_z_range, function(err, res) {
     if (err) { return fn(err, null); }
 
     var tidies = [];
@@ -80,6 +78,20 @@ Tidy.list = function(fn){
 
       fn(err, res);
     }); 
+  });
+}
+
+Tidy.list = function(fn){
+  // Get all tidies that are 'warmed' up and ready to be contacted. Any with a warmed_at of less than or equal to curent day
+  var beginning_of_day_in_ms = +new Date().setHours(0,0,0,0);
+  Tidy._query(beginning_of_day_in_ms, function(err, res) {
+    fn(err, res);
+  });
+}
+
+Tidy.listall = function(fn){
+  Tidy._query("+inf", function(err, res) {
+    fn(err, res);
   });
 }
 
@@ -190,6 +202,25 @@ var twiml = {
               });
               if (twiml_message.length <= 0) {
                 twiml_message += "No warm numbers today. Try tomorrow."
+              }
+            }
+
+            Helpers.sendTwimlResponse(request, twiml_message);
+          });
+          break;
+
+        case "LISTALL":
+          Tidy.listall(function(err, res) {
+            if (err) {
+              var message   = err.length ? err[0].message : err.message;
+              twiml_message = "ERROR: " + message;
+            } else {
+              twiml_message = "";
+              res.forEach(function(tidy) {
+                twiml_message += tidy.number+" , "+tidy.name+" | ";
+              });
+              if (twiml_message.length <= 0) {
+                twiml_message += "No numbers."
               }
             }
 

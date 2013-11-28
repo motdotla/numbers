@@ -13,6 +13,7 @@ CMD                 # list of commands
 ADD number          # add a phone number
 REMOVE number       # remove a phone number
 LIST                # list all phone numbers that are 'warmed' up. 
+LISTALL             # list all phone numbers warmed up or not
 ```
 
 <small>('Warmed' up phone numbers are numbers that are ready to be contacted after X period of time has passed.)</small>
