@@ -1,0 +1,11 @@
+{
+  "name": "numbers",
+  "description": "Track leads by phone number. Smartly follow up with them X days later. Interface via SMS so it's all right on your phone.",
+  "website": "https://github.com/scottmotte/numbers",
+  "repository": "https://github.com/scottmotte/numbers",
+  "logo": "https://raw.githubusercontent.com/scottmotte/numbers/master/numbers.png",
+  "keywords": ["numbers", "crm", "number", "relationship", "relationships"],
+  "addons": [
+    "redistogo"
+  ]
+}

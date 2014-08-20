@@ -248,5 +248,5 @@ server.route({
 });
 
 server.start(function() {
-  console.log('Handshake.js server started at: ' + server.info.uri);
+  console.log('Numbers server started at: ' + server.info.uri);
 });

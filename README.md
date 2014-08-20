@@ -22,6 +22,8 @@ Generally, after contacting a number you should then remove it from the list by 
 
 ## Installation
 
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 ### Heroku
 
 ```bash
