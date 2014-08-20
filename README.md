@@ -22,17 +22,9 @@ Generally, after contacting a number you should then remove it from the list by 
 
 ## Installation
 
+First, we need to deploy to Heroku by clicking this button:
+
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-### Heroku
-
-```bash
-git clone https://github.com/scottmotte/numbers.git
-cd numbers
-heroku create numbers
-heroku addons:add redistogo
-git push heroku master
-```
 
 Next, we need to setup Twilio. [Create an account](http://twilio.com) and then do the following.
 
